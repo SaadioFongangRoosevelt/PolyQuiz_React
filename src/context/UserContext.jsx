@@ -1,13 +1,33 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 
-//mise sur pieds du contexte
 const UserContext = createContext();
 
-// 2. le Provider
-export  function UserProvider({ children }) {
-  const [username, setUsername] = useState(null);
+// Décode le payload du JWT sans librairie externe
+function decodeToken(token) {
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
+}
+
+export function UserProvider({ children }) {
+  const [username, setUsername] = useState(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    const decoded = decodeToken(token);
+    return decoded?.pseudo || null;
+  });
+
   const [bestScore, setBestScore] = useState(0);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUsername(null);
+    setBestScore(0);
+  };
 
   return (
     <UserContext.Provider
@@ -16,6 +36,7 @@ export  function UserProvider({ children }) {
         setUsername,
         bestScore,
         setBestScore,
+        logout,
       }}
     >
       {children}
@@ -23,7 +44,6 @@ export  function UserProvider({ children }) {
   );
 }
 
-// 3. Custom hook pour simplifier l'accès
 export function useUser() {
   return useContext(UserContext);
 }

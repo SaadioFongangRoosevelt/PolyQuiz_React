@@ -9,7 +9,7 @@ export function quizReducer(state, action) {
 
     case "ANSWER_QUESTION": {
       const currentQuestion = state.questions[state.currentQuestionIndex];
-      const isCorrect = currentQuestion.bonne_réponse === action.payload;
+      const isCorrect = currentQuestion.correctAnswer === action.payload;
       const newScore = isCorrect ? state.score + 1 : state.score;
 
       return {

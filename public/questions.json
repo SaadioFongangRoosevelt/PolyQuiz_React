@@ -61,5 +61,12 @@
     "libellé": "Qui est le personnage principal de My Hero Academia ?",
     "options": ["Deku", "All Might", "Bakugo", "Todoroki"],
     "bonne_réponse": "Deku"
+  },
+  {
+    "id":11,
+    "catégorie": "Film",
+    "libellé": "Quel est le film avec le plus haut box office de tous les temps ?",
+    "options": ["Avatar", "Avatar 2", "Avengers Endgame", "Titanic"],
+    "bonne_réponse": "Avatar 2"
   }
 ]
